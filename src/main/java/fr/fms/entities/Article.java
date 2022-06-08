@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 public class Article implements Serializable {
 private static final long serialVersionUID = 1L;
 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+private long id;
 private String description;
 private String brand;
 private double price;
@@ -19,7 +19,8 @@ private double price;
 @ManyToOne
 private Category category;
 
-public Article(String description, String brand, double price,Category category) {
+public Article(long id,String description, String brand, double price,Category category) {
+	this.id=id;
 	this.description = description;
 	this.setBrand(brand);
 	this.setPrice(price);
