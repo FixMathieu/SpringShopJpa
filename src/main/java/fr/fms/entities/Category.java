@@ -16,6 +16,16 @@ public class Category  {
 	@OneToMany(mappedBy ="category")
 	private Collection<Article> articles;
 	
+	public Category(Long id, String name, Collection<Article> articles) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.articles = articles;
+	}
+	public Category(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	public Category(String name) {
 		this.name = name;
 	}

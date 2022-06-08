@@ -12,6 +12,10 @@ public class Article implements Serializable {
 private static final long serialVersionUID = 1L;
 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 private long id;
+public void setId(long id) {
+	this.id = id;
+}
+
 private String description;
 private String brand;
 private double price;
