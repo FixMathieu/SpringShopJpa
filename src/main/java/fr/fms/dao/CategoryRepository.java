@@ -8,8 +8,9 @@ import fr.fms.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category,Long>{
 
-	public List<Category> findAllOrderByIdAsc();
+	public List<Category> findAllByOrderByNameAsc();
 	
-	public List<Category> findAllOrderByIdDesc();
-
+	public List<Category> findAllByOrderByNameDesc();
+	public List<Category> findAll();
+//public void deleteAll();
 }
