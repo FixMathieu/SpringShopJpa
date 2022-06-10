@@ -53,7 +53,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				read5ArticlesByPage();
 				break;
 			case 3:
-				addArticle();
+				createArticle();
 				break;
 			case 4:
 				updateArticle();
@@ -105,19 +105,46 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 
 	}
 
-	private static void deleteArticle() {
-		// TODO Auto-generated method stub
+	private  void deleteArticle() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez la'id de l'article à supprimer : ");
+		long idArticle = scan.nextLong();
+		business.deleteArticle(idArticle);
+		System.out.println("Vous avez supprimer l'article : ");
+		System.out.println(" | "+idArticle+" | ");
+	}
+
+	private void updateArticle() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez la'id de l'article : ");
+		long idArticle = scan.nextLong();
+		System.out.println("Entrez la description de l'article : ");
+		String description = scan.next();
+		System.out.println("Entrez la marque de l'article : ");
+		String marque = scan.next();
+		System.out.println("Entrez le prix de l'article : ");
+		double price = scan.nextDouble();
+		System.out.println("Entrez l'Id de la category de l'article : ");
+		long idCate = scan.nextLong();
+		business.updateArticle(idArticle,description,marque,price,idCate);
+		System.out.println("Vous avez modifier l'article : ");
+		System.out.println(" | "+idArticle+" | "+description+" |" +marque+" | "+price+" | "+idCate);
 
 	}
 
-	private static void updateArticle() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void addArticle() {
-		// TODO Auto-generated method stub
-
+	private  void createArticle() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez la description de l'article : ");
+		String description = scan.nextLine();
+		System.out.println("Entrez la marque de l'article : ");
+		String marque = scan.next();
+		System.out.println("Entrez le prix de l'article : ");
+		double price = scan.nextDouble();
+		System.out.println("Entrez l'Id de la category de l'article : ");
+		long idCate = scan.nextLong();
+		business.createArticle(description,marque,price,idCate);
+		System.out.println("Vous avez créer l'article : ");
+		System.out.println(" | "+description+" |" +marque+" | "+price+" | "+idCate);
 	}
 
 	private static void read5ArticlesByPage() {

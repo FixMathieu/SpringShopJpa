@@ -29,6 +29,11 @@ public class Category  {
 	public Category(String name) {
 		this.name = name;
 	}
+	
+	public Category(Long id) {
+		super();
+		this.id = id;
+	}
 	public Long getId () {
 		return id;
 	}
@@ -48,4 +53,5 @@ public class Category  {
 	public String toString() {
 		return "Category [id=" + id + ", name=" + name + "]";
 	}
+	
 }

@@ -1,5 +1,7 @@
 package fr.fms.entities;
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,11 +41,29 @@ public Article(String description, String brand, double price,Category category)
 	this.category=category;
 }
 
-
+public Article(long id) {
+	this.id=id;
+}
 
 
 public Article() {}
 
+
+
+
+
+
+public Category getCategory() {
+	return category;
+}
+
+public void setCategory(Category category) {
+	this.category = category;
+}
+
+public void setDescription(String description) {
+	this.description = description;
+}
 
 public Long getId() {
 	return id;
