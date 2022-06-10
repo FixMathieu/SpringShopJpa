@@ -14,6 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long>{
 	public List<Category> findAllByOrderByNameDesc();
 	public List<Category> findAll();
 	public List<Category> findById(long id);
+	public List<Category> deleteById(long id);
 	
 //public void deleteAll();
 }

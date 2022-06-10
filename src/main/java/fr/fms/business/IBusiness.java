@@ -17,4 +17,10 @@ public interface IBusiness {
 	public void createArticle(String description, String marque, double price, long idCate);
 	public void updateArticle(long idArticle,String description, String marque, double price, long idCate);
 	public void deleteArticle(long idArticle);
+	public void addCategory(String name);
+	public void deleteCategory(long idCategory);
+	public void updateCategory(long idCategory, String name);
+	public List<Article>  readArticlesByCategory(long idCategory);
+	public List<Category> readCategoryById(long idCategory);
+	public List<Article> readArticlesById(long idArticle);
 }

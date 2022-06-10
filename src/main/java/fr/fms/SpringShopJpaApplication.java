@@ -29,19 +29,19 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 //		for (Article article : articleRepository.findAll()) {
 //			System.out.println(article);
 //		}
-		boolean menu = true;
+		int menu = 1;
 		System.out.println(
 				"-------------------------------------------------- Menu -----------------------------------------");
 		Scanner scan = new Scanner(System.in);
 		int menuChoice = 0;
-		while (menu = true) {
+		while (menu == 1) {
 			System.out.println("\nQue souhaitez vous faire ? ");
 			System.out.println(" ");
 
 			System.out.println("1/ Afficher tous les articles\n" + "2/ Afficher 5 articles par page\n"
 					+ "3/ Ajouter un article\n" + "4/ Mettre à jour un article\n" + "5/ Supprimer un article\n"
 					+ "6/ Afficher toutes les catégories\n" + "7/ Ajouter une categorie\n"
-					+ "8/ Mettre à jour une categorie\n" + "9/ Supprimer une categorie\n" + "0/ Sortir");
+					+ "8/ Mettre à jour une categorie\n" + "9/ Supprimer une categorie\n" +"10/ Afficher les articles d'une category\n"+"11/ Afficher un article\n"+"0/ Sortir");
 			while (!scan.hasNextInt())
 				scan.next();
 			menuChoice = scan.nextInt();
@@ -74,10 +74,18 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 			case 9:
 				deleteCategory();
 				break;
+			case 10:
+				readArticleByCategory();
+				break;
+			case 11:
+				readArticleById();
+				break;
 				
 			case 0:
 				// Exit
-				menu=false;
+				System.out.println("Merci de votre visite !");
+				System.out.println("");
+				menu=0;
 				break;
 			default:
 				System.out.println("\nMauvaise saisie.");
@@ -85,23 +93,75 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		}
 	}
 
-	private static void deleteCategory() {
-		// TODO Auto-generated method stub
+	private void readArticleById() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez l'id de l'article : ");
+		long idArticle = scan.nextLong();
+		for (Article article : business.readArticlesById(idArticle)) {
+			System.out.printf("| %5s | %20s | %20s | %20s | %20s |%n", article.getId(), article.getBrand(),
+					article.getDescription(), article.getPrice() + " €uros ",article.getCategory().getName());
+		}
+		
+	}
+
+	private void readArticleByCategory() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez l'id de la category pour afficher les articles : ");
+		long idCategory = scan.nextLong();
+		 for (Category category : business.readCategoryById(idCategory)) {
+			String titre = category.getName();
+			System.out.println(
+					"+------+------------------------------------------+--------------------------------+---------------------+");
+			System.out.printf("| %60s %-30s %-10s |%n","   ARTICLES PAR CATEGORIE ",	titre , "");
+			};
+
+		System.out.println(
+				"+------+------------------------------------------+--------------------------------+---------------------+");
+		System.out.printf("| %-5s| %-40s | %-30s | %-20s|%n", " ID", "               Description", "           Marque",
+				"        Prix");
+		System.out.println(
+				"+------+------------------------------------------+--------------------------------+---------------------+");
+		for (Article article : business.readArticlesByCategory(idCategory)) {
+			System.out.printf("| %-5s| %-40s | %-30s | %20s|%n", article.getId(), article.getBrand(),
+					article.getDescription(), article.getPrice() + " €uros ");
+		}
+		System.out.println(
+				"+------+------------------------------------------+--------------------------------+---------------------+");
+		
+	}
+
+	private  void deleteCategory() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez l'id de la category à supprimer : ");
+		long idCategory = scan.nextLong();
+		business.deleteCategory(idCategory);
+		System.out.println("Vous avez supprimer la category : ");
+		System.out.println(" | "+idCategory+" | ");
 
 	}
 
-	private static void updateCategory() {
-		// TODO Auto-generated method stub
-
+	private  void updateCategory() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez la'id de la categorie : ");
+		long idCategory = scan.nextLong();
+		System.out.println("Entrez le nom de la categorie : ");
+		String name = scan.next();
+		business.updateCategory(idCategory,name);
+		System.out.println("Vous avez modifié la categorie : ");
+		System.out.println(" | "+idCategory+" | "+name+" | ");
 	}
 
-	private static void addCategory() {
-		// TODO Auto-generated method stub
-
+	private  void addCategory() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrez le nom de la categorie : ");
+		String name = scan.next();
+		business.addCategory(name);
+		System.out.println("Vous avez ajouté la categorie : ");
+		System.out.println(" | "+name+" | ");
 	}
 
 	private static void show5CategoryByPage() {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -167,21 +227,21 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 
 	private void readArticle() {
 		System.out.println(
-				"+------+------------------------------------------+--------------------------------+---------------------+");
+				"+------+--------------------------------+--------------------------------+----------------------+-----------------+");
 		System.out.println(
-				"+                                            ARTICLES                                                    +");
+				"+                                            ARTICLES                                                             +");
 		System.out.println(
-				"+------+------------------------------------------+--------------------------------+---------------------+");
-		System.out.printf("| %-5s| %-40s | %-30s | %-20s|%n", " ID", "               Description", "           Marque",
-				"        Prix");
+				"+------+--------------------------------+--------------------------------+----------------------+-----------------+");
+		System.out.printf("| %-5s| %-30s | %-30s | %-20s | %-15s |%n", " ID", "               Description", "           Marque",
+				"        Prix","Categorie");
 		System.out.println(
-				"+------+------------------------------------------+--------------------------------+---------------------+");
+				"+------+--------------------------------+--------------------------------+----------------------+-----------------+");
 		for (Article article : business.readArticles()) {
-			System.out.printf("| %-5s| %-40s | %-30s | %20s|%n", article.getId(), article.getBrand(),
-					article.getDescription(), article.getPrice() + " €uros ");
+			System.out.printf("| %-5s| %-30s | %-30s | %20s | %-15s |%n", article.getId(), article.getBrand(),
+					article.getDescription(), article.getPrice() + " €uros ",article.getCategory().getName());
 		}
 		System.out.println(
-				"+------+------------------------------------------+--------------------------------+---------------------+");
+				"+------+--------------------------------+--------------------------------+----------------------+-----------------+");
 
 	}
 

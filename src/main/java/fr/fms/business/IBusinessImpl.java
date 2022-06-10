@@ -51,4 +51,34 @@ public class IBusinessImpl implements IBusiness{
 		
 	}
 
+	public void addCategory(String name) {
+		categoryRepository.save(new Category(name));
+		
+	}
+
+	public void deleteCategory(long idCategory) {
+		categoryRepository.deleteById(idCategory);
+		
+	}
+
+	public void updateCategory(long idCategory, String name) {
+		categoryRepository.save(new Category(idCategory,name));
+		
+	}
+
+	public List<Article>  readArticlesByCategory(long idCategory) {
+		
+		return articleRepository.findByCategoryId(idCategory);
+	}
+
+	public List<Category> readCategoryById(long idCategory) {
+	
+		return categoryRepository.findById(idCategory);
+	}
+
+	public List<Article> readArticlesById(long idArticle) {
+		
+		return articleRepository.findById(idArticle);
+	}
+
 }
